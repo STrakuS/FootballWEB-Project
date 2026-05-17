@@ -1,0 +1,107 @@
+﻿<section class="home" id="home">
+    <div class="top-stats-panel">
+        <div class="hero-stat-box">
+            <span class="stat-label">🏆 Lider</span>
+            <span class="stat-value">
+                @(ViewBag.Standings != null && ((IEnumerable<dynamic>)ViewBag.Standings).Any() ? ((IEnumerable<dynamic>)ViewBag.Standings).First().Team.TeamName : "-")
+            </span>
+        </div>
+        <div class="hero-stat-box">
+            <span class="stat-label">⚽ Gol Kralı</span>
+            <span class="stat-value">
+                @ViewBag.GolKrali.Player.FirstName @ViewBag.GolKrali.Player.LastName
+            
+            </span>
+        </div>
+        <div class="hero-stat-box">
+            <span class="stat-label">🪄 Asist Kralı</span>
+            <span class="stat-value">
+                @ViewBag.AsistKrali.Player.FirstName @ViewBag.AsistKrali.Player.LastName
+             
+            </span>
+        </div>
+    </div>
+
+    <div class="content">
+        <h3>🏆 Ankara Turnuvası</h3>
+        <p>Başkentin en heyecanlı futbol turnuvasına hoş geldiniz!</p>
+    </div>
+</section>
+
+<!-- FOTOĞRAFLAR BURADA -->
+<section class="gallery-section">
+    <div class="photo-gallery">
+        <img src="/images/foto1.jpeg" alt="Turnuva Fotoğrafı 1" />
+        <img src="/images/foto2.jpeg" alt="Turnuva Fotoğrafı 2" />
+    </div>
+</section>
+
+
+@* --- CSS DÜZENLEMELERİ BİTENE KADAR YORUM SATIRINA ALINAN BÖLÜMLER ---
+
+<section class="matches">
+    <div class="content">
+        <h2>📊 Puan Durumu</h2>
+        <table class="matches-table">
+            <thead>
+                <tr>
+                    <th>Takım</th>
+                    <th>O</th>
+                    <th>G</th>
+                    <th>B</th>
+                    <th>M</th>
+                    <th>P</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in ViewBag.Standings)
+                {
+                    <tr>
+                        <td>@item.Team.TeamName</td>
+                        <td>@item.Played</td>
+                        <td>@item.Wins</td>
+                        <td>@item.Draws</td>
+                        <td>@item.Losses</td>
+                        <td><strong>@item.Points</strong></td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</section>
+
+<section class="matches" style="background-color: var(--back-color); padding-top: 0;">
+    <div class="content">
+        <h2>⚽ Son Maçlar</h2>
+        <table class="matches-table">
+            <tbody>
+                @foreach (var match in ViewBag.Matches)
+                {
+                    <tr>
+                        <td style="text-align: right; width: 40%;">@match.HomeTeam.TeamName</td>
+                        <td style="background-color: var(--accent-color); color: white; font-weight: bold; width: 20%; text-align:center;">
+                            @match.HomeScore - @match.AwayScore
+                        </td>
+                        <td style="text-align: left; width: 40%;">@match.AwayTeam.TeamName</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</section>
+
+<section class="matches" style="padding-top: 0; padding-bottom: 5rem;">
+    <div class="content">
+        <h2>👥 Katılan Takımlar</h2>
+        <div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 15px; margin-top: 20px;">
+            @foreach (var team in ViewBag.Teams)
+            {
+                <div style="background: var(--main-color); color: white; padding: 10px 20px; border-radius: 5px; font-size: 1.6rem; border: 1px solid var(--accent-color);">
+                    @team.TeamName
+                </div>
+            }
+        </div>
+    </div>
+</section>
+
+--- *@

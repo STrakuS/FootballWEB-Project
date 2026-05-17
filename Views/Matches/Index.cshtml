@@ -1,0 +1,92 @@
+﻿@model IEnumerable<FootballWEB.Models.Match>
+
+<section class="players-section">
+    <h2>Maç Fikstürü</h2>
+
+    <div class="matches-container">
+        @foreach (var match in Model)
+        {
+            <div class="match-card">
+
+                <div class="match-header">
+                    <span>
+                        @(match.MatchDate.HasValue
+                                            ? match.MatchDate.Value.ToString()
+                                            : "Tarih Belirtilmedi")
+                </span>
+            </div>
+
+                <div class="match-body">
+
+                    <div class="team-side">
+                        <img src="~/images/Teams/@(match.HomeTeam?.TeamName?.Replace(" ", "") ?? "default").png"
+                             onerror="this.src='/images/logo.png';"
+                             alt="Home" />
+
+                        <span>@(match.HomeTeam?.TeamName ?? "Ev Sahibi")</span>
+                    </div>
+
+                    <div class="match-score">
+                    @if (match.HomeScore.HasValue && match.AwayScore.HasValue)
+                        {
+                            <div class="score-box">
+                                <span class="score">@match.HomeScore</span>
+                                <span class="divider">-</span>
+                                <span class="score">@match.AwayScore</span>
+                            </div>
+                        }
+                        else
+                        {
+                            <div class="vs-box">VS</div>
+                        }
+                    </div>
+
+                    <div class="team-side">
+                        <img src="~/images/Teams/@(match.AwayTeam?.TeamName?.Replace(" ", "") ?? "default").png"
+                             onerror="this.src='/images/logo.png';"
+                             alt="Away" />
+
+                        <span>@(match.AwayTeam?.TeamName ?? "Deplasman")</span>
+                    </div>
+
+                </div>
+
+                <div class="match-footer">
+                    <p>Turnuva: @(match.Tournament?.TournamentName ?? "Genel")</p>
+                </div>
+
+                <!-- SKOR GÜNCELLEME FORMU -->
+                <div class="update-form">
+
+                    <form asp-controller="Home"
+                          asp-action="UpdateMatchScore"
+                          method="post">
+
+                        <input type="hidden"
+                               name="matchId"
+                               value="@match.MatchId" />
+
+                        <input type="number"
+                               name="homeScore"
+                               value="@match.HomeScore"
+                               min="0" />
+
+                        <span class="update-divider">-</span>
+
+                        <input type="number"
+                               name="awayScore"
+                               value="@match.AwayScore"
+                               min="0" />
+
+                        <button type="submit">
+                            Skoru Güncelle
+                        </button>
+
+                    </form>
+
+                </div>
+
+            </div>
+        }
+    </div>
+</section>

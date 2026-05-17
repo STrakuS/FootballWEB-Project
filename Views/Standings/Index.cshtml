@@ -1,0 +1,56 @@
+﻿@model IEnumerable<FootballWEB.Models.Standing>
+
+@{
+    ViewData["Title"] = "Standings";
+}
+
+<div class="standings-container">
+    <h2 class="standings-title">🏆 League Standings</h2>
+
+    <table class="standings-table">
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>Team</th>
+                <th>P</th>
+                <th>W</th>
+                <th>D</th>
+                <th>L</th>
+                <th>GF</th>
+                <th>GA</th>
+                <th>GD</th>
+                <th>Pts</th>
+            </tr>
+        </thead>
+        <tbody>
+            @{
+                int position = 1;
+            }
+
+            @foreach (var item in Model.OrderByDescending(x => x.Points)
+                                                   .ThenByDescending(x => x.GoalsFor - x.GoalsAgainst))
+            {
+                string rowClass = "";
+
+                if (position == 1) rowClass = "first-place";
+                else if (position == 2) rowClass = "second-place";
+                else if (position == 3) rowClass = "third-place";
+
+                <tr class="@rowClass">
+                    <td>@position</td>
+                    <td class="team-name">@item.Team?.TeamName</td>
+                    <td>@item.Played</td>
+                    <td>@item.Wins</td>
+                    <td>@item.Draws</td>
+                    <td>@item.Losses</td>
+                    <td>@item.GoalsFor</td>
+                    <td>@item.GoalsAgainst</td>
+                    <td>@(item.GoalsFor - item.GoalsAgainst)</td>
+                    <td class="points">@item.Points</td>
+                </tr>
+
+                position++;
+            }
+        </tbody>
+    </table>
+</div>

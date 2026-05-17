@@ -1,0 +1,29 @@
+﻿@model IEnumerable<FootballWEB.Models.Player>
+
+<section class="players-section">
+    <h2>Turnuva Oyuncuları</h2>
+    
+    <div class="players-container">
+        @foreach (var player in Model)
+        {
+            <div class="player-card">
+                <img src="~/images/players/@(player.FirstName + player.LastName).jpg"
+                     onerror="this.src='/images/default-player.png';"
+                     alt="@player.FirstName">
+                
+                    <div class="player-info-overlay">
+                        <div class="player-header">
+                            <div class="player-details">
+                                <h2>@player.FirstName @player.LastName</h2>
+                                <h3>@player.Position</h3>
+                                <p>@player.Team?.TeamName</p>
+                            </div>
+                            <div class="player-number">
+                                @player.JerseyNumber
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </section>
